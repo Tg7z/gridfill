@@ -1,0 +1,39 @@
+#container {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  position: relative;
+}
+
+li.tile {
+  position: absolute;
+  display: block;
+}
+
+/* li.tile:before {
+  content: "";
+  display: table;
+  margin-top: 75%;
+} */
+
+.tile-inner {
+  position: absolute;
+  top: 0;
+  bottom: 30px;
+  left: 0;
+  right: 32px;
+
+  color: white;
+  padding: 12px 16px;
+  font-size: 20px;
+}
+
+.size1 {
+  background-color: red;
+}
+.size2 {
+  background-color: blue;
+}
+.size3 {
+  background-color: green;
+}
