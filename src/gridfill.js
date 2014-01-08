@@ -172,18 +172,19 @@ var gridfill = {
       //console.log('data_index: ' + this.data_index);
       //console.log('row: ' + this.row + ' col: ' + this.col);
       //this.consoleGrid();
-      this.checkGrid();
-      this.placeTile();
-      this.updateMap();
-      // get tile size before resetting data index as we need
-      // the last placed tiles size to decide if we backfill
-      var tile_size = this.tileSize();
-      this.resetDataIndex();
-      if (tile_size > 1 && this.col > 0) {
-        this.doBackfill(tile_size - 1);
-      }
-      if (this.options.data.length > 0) {
-        this.updatePosition();
+      if (this.checkGrid()) {
+        this.placeTile();
+        this.updateMap();
+        // get tile size before resetting data index as we need
+        // the last placed tiles size to decide if we backfill
+        var tile_size = this.tileSize();
+        this.resetDataIndex();
+        if (tile_size > 1 && this.col > 0) {
+          this.doBackfill(tile_size - 1);
+        }
+        if (this.options.data.length > 0) {
+          this.updatePosition();
+        }
       }
     }
     this.layoutGrid();
@@ -207,7 +208,7 @@ var gridfill = {
           // tile doesn't fit we will have to find one that does
           var itemFound = false;
           while (!itemFound) {
-            if (this.data_index < this.options.data.length) {
+            if (this.data_index < (this.options.data.length - 1)) {
               // find next unplaced item
               this.data_index++;
               this.index_offset++;
@@ -236,7 +237,14 @@ var gridfill = {
                   this.data_index = this.options.data.length;
                   return false;
                 }
-                this.row += 1;
+                // increment col or set new row
+                if (this.col < this.options.cols) {
+                  this.col += 1;
+                } else {
+                  this.col = 0;
+                  this.row += 1;
+                }
+                return false;
               }
             }
           }
